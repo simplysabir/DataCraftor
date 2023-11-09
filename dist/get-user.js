@@ -13,20 +13,20 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield prisma.post.create({
-            data: {
-                title: "title of post",
-                content: "gibbersih",
-                published: true,
-                author: {
-                    connect: {
-                        id: 1
-                    }
-                }
+        const users = yield prisma.user.findMany({});
+        console.log("All Users", users);
+        const user = yield prisma.user.findUnique({
+            where: {
+                id: 1
+            },
+            include: {
+                posts: true
             }
         });
+        console.log("Unique User", user);
     });
 }
+;
 main()
     .then(() => __awaiter(void 0, void 0, void 0, function* () {
     console.log("done");
